@@ -1,3 +1,5 @@
+// Test 3 methods of ltrim for speed
+// See: https://stackoverflow.com/questions/68648591/how-can-i-trim-empty-whitespace-lines
 #include <string>
 #include <sstream>
 #include <chrono>
@@ -40,7 +42,7 @@ int main()
     std::cout << "Generating...";
     std::cout.flush();
     test = Generate(1000, 8, 10);
-    std::cout << test << std::endl;
+    //std::cout << test << std::endl;
     std::cout << " done." << std::endl;
 
     std::cout << "Test 1...";
