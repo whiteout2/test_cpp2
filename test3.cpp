@@ -1,4 +1,5 @@
-// Test 3 methods of ltrim for speed
+// HELL: this is about trimming empty lines, NOT trimming whitespace off a line.
+// How can I trim empty/whitespace lines?
 // See: https://stackoverflow.com/questions/68648591/how-can-i-trim-empty-whitespace-lines
 #include <string>
 #include <sstream>
@@ -11,8 +12,7 @@ struct perf {
     std::chrono::steady_clock::time_point start_;
     perf() : start_(std::chrono::steady_clock::now()) {}
     double elapsed() const {
-        //auto stop = std::chrono::steady_clock::now();
-        std::chrono::steady_clock::time_point stop = std::chrono::steady_clock::now();
+        auto stop = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = stop - start_;
         return elapsed_seconds.count();
     }
@@ -26,7 +26,7 @@ std::string Generate(size_t line_len, size_t empty, size_t nonempty) {
     }
 
     std::string nes(line_len - 1, ' ');
-    es += "TEST\n";
+    es += "a\n";
     for (size_t i = 0; i < nonempty; ++i) {
         nes += nes;
     }
@@ -38,11 +38,10 @@ std::string Generate(size_t line_len, size_t empty, size_t nonempty) {
 int main()
 {
     std::string test;
-    //test = "  \n\t\n  \n  \tTEST\n\tTEST\n\t\t\n  TEST\t\n   \t\n \n  ";
+    test = "  \n\t\n  \n  \tTEST\n\tTEST\n\t\t\n  TEST\t\n   \t\n \n  ";
     std::cout << "Generating...";
     std::cout.flush();
-    test = Generate(1000, 8, 10);
-    //std::cout << test << std::endl;
+    //test = Generate(1000, 8, 10);
     std::cout << " done." << std::endl;
 
     std::cout << "Test 1...";
