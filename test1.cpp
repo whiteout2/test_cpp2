@@ -105,8 +105,8 @@ int main()
 
     // And trim() roll your won. C++ sucks.
     // See: https://stackoverflow.com/questions/216823/how-to-trim-a-stdstring
-     cout << trim2(mnemonic2) << "\n";
-     cout << trim2(summary2) << "\n";
+    cout << trim2(mnemonic2) << "\n";
+    cout << trim2(summary2) << "\n";
     ///////////////////////////////////
 
 
