@@ -1,16 +1,22 @@
 #include <iostream>
 #include <compare>
 #include <iomanip>
+#include <vector>
 
 #include <fmt/core.h>
 #include <fmt/color.h>
 
 #include <string.h>
 
-// declarations
-char *trim(char *p);
-
 using namespace std;
+
+// declarations
+char *trim(char *str);
+
+string& trim2(string& s);
+vector<string> split(string s, string delimiter);
+
+
 
 int main()
 {
@@ -57,6 +63,7 @@ int main()
 
     // TEST: string manipulation in C and C++
     // Always easy in JS, C# and PHP.
+    // We need the equivalent of split() and trim()
     // String: ADCX — Unsigned Integer Addition of Two Operands with Carry Flag
     // var txt = "ADCX %E2%80%94 Unsigned Integer Addition of Two Operands with Carry Flag"
     // var mnemonic = decodeURIComponent( txt.split('%E2%80%94')[0] ).trim();
@@ -79,7 +86,29 @@ int main()
     // Roll your own trim()
     // See: https://stackoverflow.com/questions/122616/how-do-i-trim-leading-trailing-whitespace-in-a-standard-way
     printf("%s\n", trim(mnemonic));
-    printf("%s\n", trim(summary));     
+    printf("%s\n", trim(summary));
+    ///////////////////////////////////
+
+
+    // In C++
+    string line2 = "ADCX %E2%80%94 Unsigned Integer Addition of Two Operands with Carry Flag";
+    string search2 = "%E2%80%94";
+
+    // Roll your own split() Really?
+    // See: https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
+    // Let's not use boost, regex, templates, lambdas or ranges
+    string mnemonic2 = split(line2, search2)[0];
+    string summary2  = split(line2, search2)[1];
+
+    cout << mnemonic2 << "\n";
+    cout << summary2 << "\n";
+
+    // And trim() roll your won. C++ sucks.
+    // See: https://stackoverflow.com/questions/216823/how-to-trim-a-stdstring
+     cout << trim2(mnemonic2) << "\n";
+     cout << trim2(summary2) << "\n";
+    ///////////////////////////////////
+
 
 
     std::cout << std::flush;
@@ -97,4 +126,30 @@ char *trim(char *str)
     while (*q) q++;
     while (q > str && isspace(*--q)) *q = 0;
     return p;
+}
+
+string& trim2(string& s)
+{
+    s.erase(s.find_last_not_of(" \n\r\t")+1);
+    s.erase(0, s.find_first_not_of(" \n\r\t"));                                                                                               
+    return s;
+}
+
+
+vector<string> split(string s, string delimiter)
+{
+    size_t pos = 0;
+    std::string token;
+    vector<string> res;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        //std::cout << token << std::endl;
+        res.push_back(token);
+        s.erase(0, pos + delimiter.length());
+    }
+    // And the rest:
+    //std::cout << s << std::endl;
+    res.push_back(s);
+
+    return res;
 }
