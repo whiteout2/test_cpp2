@@ -47,7 +47,6 @@ int main()
     std::cout.flush();
     perf p1;
     std::string out1;
-    //std::regex re(R"(^\s*\n|\n\s*$)");
     std::regex re(R"(^\s*\n|\n\s*$)");
     try {
         out1 = std::regex_replace(test, re, "");
