@@ -11,7 +11,7 @@ int main()
 {
     int x = 2;
 
-    if (x<=>1 > 0) {
+    if ((x<=>1) > 0) {
         std::cout << "Test!\n";
     }
 

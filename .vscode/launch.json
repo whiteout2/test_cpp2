@@ -15,6 +15,15 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
+            "targetArchitecture": "arm64",
+            "preLaunchTask": "C/C++: clang++ build active file"
+        },
+        {
+            "name": "Launch M1",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}",
+            "args": ["-arg1", "-arg2"],
             "preLaunchTask": "C/C++: clang++ build active file"
         }
     ]

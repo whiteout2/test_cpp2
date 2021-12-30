@@ -22,7 +22,7 @@ int main()
 {
     int x = 2;
 
-    if (x<=>1 > 0) {
+    if ((x<=>1) > 0) {
         std::cout << "Test!\n";
     }
 
@@ -103,7 +103,7 @@ int main()
     cout << mnemonic2 << "\n";
     cout << summary2 << "\n";
 
-    // And trim() roll your won. C++ sucks.
+    // And trim() roll your own. C++ sucks.
     // See: https://stackoverflow.com/questions/216823/how-to-trim-a-stdstring
     cout << trim2(mnemonic2) << "\n";
     cout << trim2(summary2) << "\n";
