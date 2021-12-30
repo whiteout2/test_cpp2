@@ -1,4 +1,5 @@
-// HELL: this is about trimming empty lines from a text, NOT trimming whitespace off a line.
+// HELL: this is about trimming empty lines from the start and end of a text,
+// NOT about trimming whitespace off the start and end of a line.
 // How can I trim empty/whitespace lines?
 // See: https://stackoverflow.com/questions/68648591/how-can-i-trim-empty-whitespace-lines
 #include <string>
