@@ -2,7 +2,9 @@
 // NOT about trimming whitespace off the start and end of a line.
 // How can I trim empty/whitespace lines?
 // See: https://stackoverflow.com/questions/68648591/how-can-i-trim-empty-whitespace-lines
-// Three ways: regex, std, indexes. Slow, fast, faster: 21s, 0.04s, 0.003s.
+// Three ways: regex, std, indexes. Slow, fast, faster.
+// MacBook Air M1:   21s, 0.04s, 0.003s
+// MacBook Air 2015: 67s, 0.13s, 0.011s
 #include <string>
 #include <sstream>
 #include <chrono>
