@@ -119,12 +119,12 @@ int main()
     string line3 = "ADCX %E2%80%94 Unsigned Integer Addition of Two Operands with Carry Flag";
     string search3 = "%E2%80%94";
 
-    vector<string> result; 
+    vector<string> result;
+    //boost::split(result, line3, search3);
     // NONO: only with boost::is_any_of() characters as separator
-    // NOTE: we are getting atrocious error reports because templates
-    //boost::split(result, line3, search);
+    // NOTE: we are getting atrocious error reports because of templates
     // Only with regex. Gonna be dog slow.
-    boost::algorithm::split_regex(result, line3, boost::regex(search));
+    boost::algorithm::split_regex(result, line3, boost::regex(search3));
 
     string mnemonic3 = result[0];
     string summary3  = result[1];
