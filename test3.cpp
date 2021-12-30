@@ -40,10 +40,10 @@ std::string Generate(size_t line_len, size_t empty, size_t nonempty) {
 int main()
 {
     std::string test;
-    test = "  \n\t\n  \n  \tTEST\n\tTEST\n\t\t\n  TEST\t\n   \t\n \n  ";
+    //test = "  \n\t\n  \n  \tTEST\n\tTEST\n\t\t\n  TEST\t\n   \t\n \n  ";
     std::cout << "Generating...";
     std::cout.flush();
-    //test = Generate(1000, 8, 10);
+    test = Generate(1000, 8, 10);
     std::cout << " done." << std::endl;
 
     std::cout << "Test 1...";
