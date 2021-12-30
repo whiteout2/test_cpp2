@@ -2,6 +2,7 @@
 // NOT about trimming whitespace off the start and end of a line.
 // How can I trim empty/whitespace lines?
 // See: https://stackoverflow.com/questions/68648591/how-can-i-trim-empty-whitespace-lines
+// Three ways: regex, std, indexes. Slow, fast, faster.
 #include <string>
 #include <sstream>
 #include <chrono>
