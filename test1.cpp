@@ -8,6 +8,11 @@
 
 #include <string.h>
 
+#include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string/regex.hpp>
+
+
 using namespace std;
 
 // declarations
@@ -108,6 +113,33 @@ int main()
     cout << trim2(mnemonic2) << "\n";
     cout << trim2(summary2) << "\n";
     ///////////////////////////////////
+
+
+    // Take a boost
+    string line3 = "ADCX %E2%80%94 Unsigned Integer Addition of Two Operands with Carry Flag";
+    string search3 = "%E2%80%94";
+
+    vector<string> result; 
+    // NONO: only with boost::is_any_of() characters as separator
+    // NOTE: we are getting atrocious error reports because templates
+    //boost::split(result, line3, search);
+    // Only with regex. Gonna be dog slow.
+    boost::algorithm::split_regex(result, line3, boost::regex(search));
+
+    string mnemonic3 = result[0];
+    string summary3  = result[1];
+
+    cout << mnemonic3 << "\n";
+    cout << summary3 << "\n";
+
+    // trim (in-place and does not return. Sucks.)
+    boost::trim(mnemonic3);
+    boost::trim(summary3);
+
+    cout << mnemonic3 << "\n";
+    cout << summary3 << "\n";
+    ///////////////////////////////////
+
 
 
 
