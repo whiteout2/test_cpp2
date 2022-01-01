@@ -46,6 +46,35 @@ void print(const StringToStringMap& dict) {
 // StringToStringMap::iterator p == iterator
 
 
+// Chevron hell redux:
+// See: https://yosefk.com/c++fqa/defective.html#defect-7
+// You may think it's a StringToStringMap, but only until the tools enlighten you - it's actually more of a...
+//
+// // don't read this, it's impossible. just count the lines
+// std::map<std::basic_string<char, std::char_traits<char>, std::allocator<char> >,
+// std::basic_string<char, std::char_traits<char>, std::allocator<char> >,
+// std::less<std::basic_string<char, std::char_traits<char>, std::allocator<char> >
+//   >, std::allocator<std::pair<std::basic_string<char, std::char_traits<char>,
+// std::allocator<char> > const, std::basic_string<char, std::char_traits<char>,
+// std::allocator<char> > > > >
+//
+// map<basic_string<char, char_traits<char>, allocator<char> >,
+//     basic_string<char, char_traits<char>, allocator<char> >,
+//     less<basic_string<char, char_traits<char>, allocator<char> > >,
+//     allocator<pair<basic_string<char, char_traits<char>, allocator<char> > const,
+//                    basic_string<char, char_traits<char>, allocator<char> > > > >
+//  
+
+// NOTE: to get angle bracket pairing in vscode to work change:
+// /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/cpp/language-configuration.json
+// See: https://stackoverflow.com/questions/62068072/how-to-activate-automatic-angle-bracket-pairing-completion-in-visual-studio
+map<basic_string<char, char_traits<char>, allocator<char>>,
+    basic_string<char, char_traits<char>, allocator<char>>,
+    less<basic_string<char, char_traits<char>, allocator<char>>>,
+    allocator<pair<basic_string<char, char_traits<char>, allocator<char>> const,
+                   basic_string<char, char_traits<char>, allocator<char>>>>> my_map2;
+
+
 
 
 int main()
