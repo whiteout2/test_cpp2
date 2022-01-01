@@ -22,6 +22,31 @@ string& trim2(string& s);
 vector<string> split(string s, string delimiter);
 
 
+// the code
+// See: https://yosefk.com/c++fqa/defective.html#defect-12
+typedef std::map<std::string,std::string> StringToStringMap;
+
+void print(const StringToStringMap& dict) {
+    //for(StringToStringMap::iterator p=dict.begin(); p!=dict.end(); ++p) { // error
+    for(StringToStringMap::const_iterator p=dict.begin(); p!=dict.end(); ++p) { // OK   
+    //for(auto p=dict.begin(); p!=dict.end(); ++p) { // OK
+        std::cout << p->first << " -> " << p->second << std::endl;
+    }
+}
+
+// error: no viable conversion from 
+// 'std::__1::map<std::__1::basic_string<char>, std::__1::basic_string<char>>::const_iterator' 
+// (aka '__map_const_iterator<__tree_const_iterator<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, std::__1::__tree_node<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, void *> *, long>>') 
+// to 'StringToStringMap::iterator' 
+// (aka '__map_iterator<__tree_iterator<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, std::__1::__tree_node<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, void *> *, long>>')
+// 
+// for(StringToStringMap::iterator p=dict.begin(); p!=dict.end(); ++p) {
+//                                 ^ ~~~~~~~~~~~~
+// dict.begin() == const_iterator
+// StringToStringMap::iterator p == iterator
+
+
+
 
 int main()
 {
@@ -141,6 +166,8 @@ int main()
     ///////////////////////////////////
 
 
+    StringToStringMap my_map = {{"test1", "abc"}, {"test2", "def"}, {"test3", "ghi"}};
+    print(my_map);
 
 
     std::cout << std::flush;
@@ -185,3 +212,6 @@ vector<string> split(string s, string delimiter)
 
     return res;
 }
+
+
+
