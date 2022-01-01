@@ -28,8 +28,8 @@ typedef std::map<std::string,std::string> StringToStringMap;
 
 void print(const StringToStringMap& dict) {
     //for(StringToStringMap::iterator p=dict.begin(); p!=dict.end(); ++p) { // error
-    for(StringToStringMap::const_iterator p=dict.begin(); p!=dict.end(); ++p) { // OK   
-    //for(auto p=dict.begin(); p!=dict.end(); ++p) { // OK
+    //for(StringToStringMap::const_iterator p=dict.begin(); p!=dict.end(); ++p) { // OK   
+    for(auto p=dict.begin(); p!=dict.end(); ++p) { // OK
         std::cout << p->first << " -> " << p->second << std::endl;
     }
 }
@@ -68,11 +68,26 @@ void print(const StringToStringMap& dict) {
 // NOTE: to get angle bracket pairing in vscode to work change:
 // /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/cpp/language-configuration.json
 // See: https://stackoverflow.com/questions/62068072/how-to-activate-automatic-angle-bracket-pairing-completion-in-visual-studio
+// Layout like JSON makes templates more readable
 map<basic_string<char, char_traits<char>, allocator<char>>,
     basic_string<char, char_traits<char>, allocator<char>>,
     less<basic_string<char, char_traits<char>, allocator<char>>>,
     allocator<pair<basic_string<char, char_traits<char>, allocator<char>> const,
                    basic_string<char, char_traits<char>, allocator<char>>>>> my_map2;
+
+map<
+    basic_string<char, char_traits<char>, allocator<char>>,
+    basic_string<char, char_traits<char>, allocator<char>>,
+    less<
+        basic_string<char, char_traits<char>, allocator<char>>
+    >,
+    allocator<
+        pair<
+            basic_string<char, char_traits<char>, allocator<char>> const,
+            basic_string<char, char_traits<char>, allocator<char>>
+        >
+    >
+> my_map3;
 
 
 
@@ -194,7 +209,7 @@ int main()
     cout << summary3 << "\n";
     ///////////////////////////////////
 
-
+    // template test
     StringToStringMap my_map = {{"test1", "abc"}, {"test2", "def"}, {"test3", "ghi"}};
     print(my_map);
 
