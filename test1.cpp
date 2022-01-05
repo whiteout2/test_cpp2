@@ -192,7 +192,7 @@ int main()
     //boost::split(result, line3, search3);
     // NONO: only with boost::is_any_of() characters as separator
     // NOTE: we are getting atrocious error reports because of templates
-    // Only with regex. Gonna be dog slow.
+    // String separators only with regex. Gonna be dog slow.
     boost::algorithm::split_regex(result, line3, boost::regex(search3));
 
     string mnemonic3 = result[0];
