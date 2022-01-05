@@ -8,6 +8,11 @@
 
 #include <string.h>
 
+#include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string/regex.hpp>
+
+
 using namespace std;
 
 // declarations
@@ -15,6 +20,75 @@ char *trim(char *str);
 
 string& trim2(string& s);
 vector<string> split(string s, string delimiter);
+
+
+// the code
+// See: https://yosefk.com/c++fqa/defective.html#defect-12
+typedef std::map<std::string,std::string> StringToStringMap;
+
+void print(const StringToStringMap& dict) {
+    //for(StringToStringMap::iterator p=dict.begin(); p!=dict.end(); ++p) { // error
+    //for(StringToStringMap::const_iterator p=dict.begin(); p!=dict.end(); ++p) { // OK   
+    for(auto p=dict.begin(); p!=dict.end(); ++p) { // OK
+        std::cout << p->first << " -> " << p->second << std::endl;
+    }
+}
+
+// error: no viable conversion from 
+// 'std::__1::map<std::__1::basic_string<char>, std::__1::basic_string<char>>::const_iterator' 
+// (aka '__map_const_iterator<__tree_const_iterator<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, std::__1::__tree_node<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, void *> *, long>>') 
+// to 'StringToStringMap::iterator' 
+// (aka '__map_iterator<__tree_iterator<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, std::__1::__tree_node<std::__1::__value_type<std::__1::basic_string<char>, std::__1::basic_string<char>>, void *> *, long>>')
+// 
+// for(StringToStringMap::iterator p=dict.begin(); p!=dict.end(); ++p) {
+//                                 ^ ~~~~~~~~~~~~
+// dict.begin() == const_iterator
+// StringToStringMap::iterator p == iterator
+
+
+// Chevron hell redux:
+// See: https://yosefk.com/c++fqa/defective.html#defect-7
+// You may think it's a StringToStringMap, but only until the tools enlighten you - it's actually more of a...
+//
+// // don't read this, it's impossible. just count the lines
+// std::map<std::basic_string<char, std::char_traits<char>, std::allocator<char> >,
+// std::basic_string<char, std::char_traits<char>, std::allocator<char> >,
+// std::less<std::basic_string<char, std::char_traits<char>, std::allocator<char> >
+//   >, std::allocator<std::pair<std::basic_string<char, std::char_traits<char>,
+// std::allocator<char> > const, std::basic_string<char, std::char_traits<char>,
+// std::allocator<char> > > > >
+//
+// map<basic_string<char, char_traits<char>, allocator<char> >,
+//     basic_string<char, char_traits<char>, allocator<char> >,
+//     less<basic_string<char, char_traits<char>, allocator<char> > >,
+//     allocator<pair<basic_string<char, char_traits<char>, allocator<char> > const,
+//                    basic_string<char, char_traits<char>, allocator<char> > > > >
+//  
+
+// NOTE: to get angle bracket pairing in vscode to work change:
+// /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/cpp/language-configuration.json
+// See: https://stackoverflow.com/questions/62068072/how-to-activate-automatic-angle-bracket-pairing-completion-in-visual-studio
+// Layout like JSON makes templates more readable
+map<basic_string<char, char_traits<char>, allocator<char>>,
+    basic_string<char, char_traits<char>, allocator<char>>,
+    less<basic_string<char, char_traits<char>, allocator<char>>>,
+    allocator<pair<basic_string<char, char_traits<char>, allocator<char>> const,
+                   basic_string<char, char_traits<char>, allocator<char>>>>> my_map2;
+
+map<
+    basic_string<char, char_traits<char>, allocator<char>>,
+    basic_string<char, char_traits<char>, allocator<char>>,
+    less<
+        basic_string<char, char_traits<char>, allocator<char>>
+    >,
+    allocator<
+        pair<
+            basic_string<char, char_traits<char>, allocator<char>> const,
+            basic_string<char, char_traits<char>, allocator<char>>
+        >
+    >
+> my_map3;
+
 
 
 
@@ -110,6 +184,42 @@ int main()
     ///////////////////////////////////
 
 
+    // Take a boost
+    string line3 = "ADCX %E2%80%94 Unsigned Integer Addition of Two Operands with Carry Flag";
+    string search3 = "%E2%80%94";
+
+    vector<string> result;
+    //boost::split(result, line3, search3);
+    // NONO: only with boost::is_any_of() characters as separator
+    // NOTE: we are getting atrocious error reports because of templates
+    // Only with regex. Gonna be dog slow.
+    boost::algorithm::split_regex(result, line3, boost::regex(search3));
+
+    string mnemonic3 = result[0];
+    string summary3  = result[1];
+
+    cout << mnemonic3 << "\n";
+    cout << summary3 << "\n";
+
+    // trim (in-place and does not return. Sucks.)
+    boost::trim(mnemonic3);
+    boost::trim(summary3);
+
+    cout << mnemonic3 << "\n";
+    cout << summary3 << "\n";
+    ///////////////////////////////////
+
+
+    // template test
+    StringToStringMap my_map = {{"test1", "abc"}, {"test2", "def"}, {"test3", "ghi"}};
+    print(my_map);
+
+
+    // Intellisense test
+    vector<string> msg{"Hello", "C++", "World"};
+    //msg.
+
+
 
     std::cout << std::flush;
     int dummy = 0;
@@ -153,3 +263,6 @@ vector<string> split(string s, string delimiter)
 
     return res;
 }
+
+
+
