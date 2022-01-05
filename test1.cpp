@@ -209,9 +209,16 @@ int main()
     cout << summary3 << "\n";
     ///////////////////////////////////
 
+
     // template test
     StringToStringMap my_map = {{"test1", "abc"}, {"test2", "def"}, {"test3", "ghi"}};
     print(my_map);
+
+
+    // Intellisense test
+    vector<string> msg{"Hello", "C++", "World"};
+    //msg.
+
 
 
     std::cout << std::flush;
